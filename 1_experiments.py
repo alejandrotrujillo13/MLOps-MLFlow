@@ -14,6 +14,7 @@ iris = load_iris()
 X, y = iris.data, iris.target
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
+mlflow.set_tracking_uri("http://127.0.0.1:5000")
 mlflow.set_experiment("Iris experiment")
 
 with mlflow.start_run():
@@ -29,7 +30,7 @@ with mlflow.start_run():
     y_pred = model.predict(X_test)
     accuracy = accuracy_score(y_test, y_pred)
     mlflow.log_metric("accuracy", accuracy)
-    
+
     cm = confusion_matrix(y_test, y_pred)
     plt.figure(figsize=(8, 6))
     sns.heatmap(cm, annot=True, fmt='d', cmap='Blues', xticklabels=iris.target_names, yticklabels=iris.target_names)
@@ -38,11 +39,11 @@ with mlflow.start_run():
     plt.title("Confusion Matrix")
     plt.savefig("confusion_matrix.png")
     mlflow.log_artifact("confusion_matrix.png")
-    os.system('rm confusion_matrix.png')    
+    os.system('rm confusion_matrix.png')
 
     input_example = pd.DataFrame(X_train[:1], columns=iris.feature_names)
     signature = mlflow.models.signature.infer_signature(X_train, model.predict(X_train))
-    
+
     mlflow.sklearn.log_model(
         sk_model=model,
         artifact_path="model_iris",
