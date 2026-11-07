@@ -1,7 +1,7 @@
 import mlflow.sklearn
 
-run_id = "ff6fed6f64bf4362bce105df581645c5"  # Reemplaza con tu RUN_ID
-artifact_path = "pipeline_medical_insurance"  
+run_id = "bc9f6c8a0f2241948ce96ce37b60a7a1"  # Reemplaza con tu RUN_ID
+artifact_path = "pipeline_medical_insurance"
 model_path = f"runs:/{run_id}/{artifact_path}"
 
 loaded_model = mlflow.pyfunc.load_model(model_path)
