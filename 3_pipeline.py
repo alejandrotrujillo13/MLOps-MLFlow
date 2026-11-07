@@ -18,6 +18,7 @@ categorical_features = ['sex', 'region', 'smoker']
 numerical_features = [col for col in X.columns if col not in categorical_features]
 best_params = {'n_estimators': 369, 'max_depth': 12, 'min_samples_split': 3, 'min_samples_leaf': 1}
 
+mlflow.set_tracking_uri("http://127.0.0.1:5000")
 mlflow.set_experiment("Optuna Medical Insurance Experiment")
 
 with mlflow.start_run(run_name="final_model_pipeline"):
